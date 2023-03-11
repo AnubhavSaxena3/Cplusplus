@@ -1,52 +1,26 @@
-// 3 input
-// 1 2 3
-
-// 1 2 3 o/p
-// 1 3 2
-// 2 1 3
-// 2 3 1
-// 3 1 2
-// 3 2 1
-#include "bits/stdc++.h"
+// ABC
+// ACB
+// BAC
+// BCA
+// CAB
+// CBA print all permutation
+#include <iostream>
 using namespace std;
-void helper(vector<int> a, vector<vector<int>> &ans, int idx)
+void permutation(string s, string ans)
 {
-    if (idx == a.size())
+    if (s.length() == 0)
     {
-        ans.push_back(a);
+        cout << ans << endl;
         return;
     }
-    for (int i = idx; i < a.size(); i++)
+    for (int i = 0; i < s.length(); i++)
     {
-        if (i != idx and a[i] == a[idx])
-
-            continue;
-        swap(a[i], a[idx]);
-        helper(a, ans, idx + 1);
+        char ch = s[i];
+        string ros = s.substr(0, i) + s.substr(i + 1);
+        permutation(ros, ans + ch);
     }
 }
-vector<vector<int>> permute(vector<int> nums)
-{
-    sort(nums.begin(), nums.end());
-    vector<vector<int>> ans;
-    helper(nums, ans, 0);
-    return ans;
-}
-
 int main()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    for (auto &i : a)
-
-        cin >> i;
-    vector<vector<int>> res = permute(a);
-    for (auto v : res)
-    {
-        for (auto i : v)
-
-            cout << i << " ";
-        cout <<endl;
-    }
+    permutation("ABC", "");
 }
