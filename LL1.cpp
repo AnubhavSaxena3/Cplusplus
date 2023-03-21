@@ -86,9 +86,38 @@ void deletion(node *&head, int val) // this function will get error when we dele
     temp->next = temp->next->next;
     delete todelete;
 }
+node *reverse(node *&head)
+{
+    node *prevptr = NULL;
+    node *currptr = head;
+    node *nextptr;
+
+    while (currptr != NULL)
+    {
+        nextptr = currptr->next;
+        currptr->next = prevptr;
+
+        prevptr = currptr;
+        currptr = nextptr;
+    }
+    return prevptr;
+}
+
+node* reverseRecursive(node* &head)
+{
+    if (head == NULL || head->next == NULL)
+    {
+        return head;
+    }
+    node* newhead = reverseRecursive(head->next);
+    
+    head->next->next = head;
+    head->next = NULL;
+    return newhead;
+}
 int main()
 {
-    node *head = NULL;
+    node* head = NULL;
     insertAtTail(head, 1);
     insertAtTail(head, 2);
     insertAtTail(head, 3);
@@ -100,4 +129,10 @@ int main()
     deletion(head, 2);
     // deleteAtHead(head);//only for deleting head element
     display(head);
+    // node* newhead = reverse(head);
+
+    
+    node* newhead = reverseRecursive(head);
+    display(newhead);
+    
 }
