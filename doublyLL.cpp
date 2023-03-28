@@ -50,16 +50,18 @@ void display(node *head)
     }
     cout << endl;
 }
-void deleteAtHead(node* &head){
-    node* todelete=head;
-    head=head->next;
-    head->prev=NULL;
-    delete todelete;    
+void deleteAtHead(node *&head)
+{
+    node *todelete = head;
+    head = head->next;
+    head->prev = NULL;
+    delete todelete;
 }
 
 void deletion(node *&head, int pos)
 {
-    if(pos==1){
+    if (pos == 1)
+    {
         deleteAtHead(head);
         return;
     }
@@ -70,22 +72,74 @@ void deletion(node *&head, int pos)
         temp = temp->next;
         count++;
     }
-    temp->prev->next=temp->next;
-    if(temp->next!=NULL){
-        temp->next->prev=temp->prev;
+    temp->prev->next = temp->next;
+    if (temp->next != NULL)
+    {
+        temp->next->prev = temp->prev;
     }
     delete temp;
+}
+
+// append last k nodes of link list
+
+int length(node *head)
+{
+    int l = 0;
+    node *temp = head;
+    while (temp != NULL)
+    {
+        l++;
+        temp = temp->next;
+    }
+    return l;
+}
+
+node *kappend(node *&head, int k)
+{
+    node *newHead;
+    node *newTail;
+    node *tail = head;
+    int l = length(head);
+    k = k % l;
+    int count = 1;
+    while (tail->next != NULL)
+    {
+        if (count == l - k)
+        {
+            newTail = tail;
+        }
+        if (count == l - k + 1)
+        {
+            newHead = tail;
+        }
+        tail = tail->next;
+        count++;
+    }
+    newTail->next = NULL;
+    tail->next = head;
+    return newHead;
 }
 int main()
 {
     node *head = NULL;
-    insertAtTail(head, 1);
-    insertAtTail(head, 2);
-    insertAtTail(head, 3);
-    insertAtTail(head, 4);
+    // insertAtTail(head, 1);
+    // insertAtTail(head, 2);
+    // insertAtTail(head, 3);
+    // insertAtTail(head, 4);
+    // display(head);
+    // insertAtHead(head, 5);
+    // display(head);
+    // deletion(head, 1);
+    // display(head);
+
+    // for kappend
+    int arr[] = {1, 2, 3, 4, 5, 6};
+    for (int i = 0; i < 6; i++)
+    {
+        insertAtTail(head, arr[i]);
+    }
     display(head);
-    insertAtHead(head, 5);
-    display(head);
-    deletion(head,1);
-    display(head);
+    node *newhead = kappend(head, 3);
+    display(newhead);
+    return 0;
 }
